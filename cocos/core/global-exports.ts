@@ -60,7 +60,7 @@ const _global = typeof window === 'undefined' ? global : window;
  * Cocos 引擎的主要命名空间，引擎代码中所有的类，函数，属性和常量都在这个命名空间中定义。
  * @deprecated
  */
-export const legacyCC: Record<string, any> & {
+export const legacyCC: Record<string, any> & {      //typeof legacyCC = "object"    {_global: Window}
     _global: typeof globalThis;
 } = {
     _global,
