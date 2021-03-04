@@ -32,20 +32,31 @@ export const MAX_ATTACHMENTS = 4;
 
 export enum ObjectType {
     UNKNOWN,
-    BUFFER,
+    BUFFER,                     //抽象VB，IB，UB等各种数据缓冲
     TEXTURE,
-    RENDER_PASS,
+    RENDER_PASS,                //存放颜色缓冲区和深度缓冲区，也就是画布。
     FRAMEBUFFER,
     SAMPLER,
     SHADER,
-    DESCRIPTOR_SET_LAYOUT,
-    PIPELINE_LAYOUT,
+    DESCRIPTOR_SET_LAYOUT,      //描述DescriptorSet绑定的布局。（相当于告诉GPU如何读取DescriptorSet数据）
+    PIPELINE_LAYOUT,            //DescriptorSetLayout和其他扩展信息，如WebGL2实现中有WebGL2PipelineLayout信息。
+    /**
+     *  主要由以下状态动态组建 
+        PipelineLayout
+        Shader
+        RenderPass
+        RasterizerState：CullMode，PolygonMode等
+        DepthStencilState：DepthTest，StencilTest等
+        BlendTarget：Blend设置
+        BlendState：BlendTarget集合等
+        InputState：Attributes
+     */
     PIPELINE_STATE,
-    DESCRIPTOR_SET,
-    INPUT_ASSEMBLER,
-    COMMAND_BUFFER,
+    DESCRIPTOR_SET,             //集中管理UB，Texture，Sampler等
+    INPUT_ASSEMBLER,            //集中管理VB，IB，Attributes，IndirectBuffer等各种输入
+    COMMAND_BUFFER,             //将每一个渲染动作抽象为命令提交到队列，submit时统一执行，支持异步渲染。（为Vulkan等下一代渲染接口准备，WebGL并未实现）
     FENCE,
-    QUEUE,
+    QUEUE,                      //CommandBuffer队列？（WebgGL实现只有一个空的Queue，CommandBuffer只用了一个默认的）
     WINDOW,
 }
 
